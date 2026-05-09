@@ -33,8 +33,8 @@ jobs:
       - name: Test Docker build
         run: |
           docker build -t task-management-api .
-          docker run -d -p 3000:3000 --name test-container task-management-api
-          sleep 10
+          docker run -d -p 3000:3000 -e NODE_ENV=test --name test-container task-management-api
+          sleep 15
           curl -f http://localhost:3000/health || exit 1
           docker stop test-container
           docker rm test-container
