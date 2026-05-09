@@ -1,0 +1,27 @@
+{
+  "name": "task-management-api",
+  "version": "1.0.0",
+  "description": "Minimal Task Management REST API with Docker, Logging, and CI/CD",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server-with-db.js",
+    "dev": "node src/server-with-db.js",
+    "dev:simple": "node src/simple-server.js",
+    "test": "echo \"No tests yet\"",
+    "lint": "echo \"No linting yet\"",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down -v",
+    "docker:logs": "docker-compose logs -f",
+    "db:reset": "docker-compose down -v && docker-compose up -d postgres"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "api"
+  ],
+  "author": "Developer",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^8.20.0"
+  }
+}

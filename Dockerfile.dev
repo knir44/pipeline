@@ -1,0 +1,43 @@
+# Development Dockerfile with hot reloading
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Create a non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
+
+# Install development tools globally
+RUN npm install -g nodemon
+
+# Create logs directory
+RUN mkdir -p /app/logs && \
+    chown -R nodejs:nodejs /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies (including dev dependencies)
+RUN npm install && \
+    npm cache clean --force
+
+# Copy source code with proper ownership
+COPY --chown=nodejs:nodejs . .
+
+# Create volume for logs
+VOLUME ["/app/logs"]
+
+# Switch to non-root user
+USER nodejs
+
+# Expose port
+EXPOSE 3000
+
+# Set development environment variables
+ENV NODE_ENV=development
+ENV PORT=3000
+ENV LOG_LEVEL=debug
+
+# Start with nodemon for hot reloading
+CMD ["npm", "run", "dev"]
